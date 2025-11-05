@@ -2,7 +2,6 @@
 
 package org.unbrokendome.gradle.pluginutils
 
-import org.gradle.api.plugins.Convention
 import org.gradle.api.plugins.ExtensionAware
 
 
@@ -58,31 +57,3 @@ inline fun <reified T : Any> Any.extension(): T? =
  */
 inline fun <reified T : Any> Any.requiredExtension(): T =
     (this as ExtensionAware).extensions.getByType(typeOf<T>())
-
-
-/**
- * Gets the convention plugin object of the given type if it exists.
- *
- * Will return `null` if the receiver is not an object that supports conventions.
- *
- * @receiver the object containing conventions
- * @param <T> the convention plugin type
- * @return the convention plugin object, or `null` if it does not exist
- */
-@Deprecated("prefer extension objects over conventions")
-inline fun <reified T : Any> Any.conventionPlugin(): T? =
-    ((this as? ExtensionAware)?.extensions as? Convention)?.findPlugin(T::class.java)
-
-
-/**
- * Gets the convention plugin object of the given type, throwing an exception if it does not exist.
- *
- * @receiver the object containing conventions
- * @param <T> the convention type
- * @return the convention plugin object
- * @throws ClassCastException if the receiver object does not support conventions
- * @throws IllegalStateException if the convention plugin does not exist
- */
-@Deprecated("prefer extension objects over conventions")
-inline fun <reified T : Any> Any.requiredConventionPlugin(): T =
-    ((this as ExtensionAware).extensions as Convention).getPlugin(T::class.java)

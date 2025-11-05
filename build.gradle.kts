@@ -13,7 +13,15 @@ subprojects {
     plugins.withId("org.jetbrains.kotlin.jvm") {
 
         configure<KotlinJvmProjectExtension> {
-            jvmToolchain(11)
+            jvmToolchain(17)
+            compilerOptions {
+                jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+            }
+        }
+
+        tasks.withType<JavaCompile> {
+            sourceCompatibility = "11"
+            targetCompatibility = "11"
         }
 
         dependencies {
@@ -32,7 +40,8 @@ subprojects {
 
         tasks.withType<Test> {
             useJUnitPlatform()
-            systemProperty("java.io.tmpdir", layout.buildDirectory.dir("tmp"))
+            systemProperty("java.io.tmpdir", layout.buildDirectory.dir("tmp").get())
+            jvmArgs = listOf("--add-opens", "java.base/java.lang=ALL-UNNAMED")
         }
 
         plugins.withType<MavenPublishPlugin> {

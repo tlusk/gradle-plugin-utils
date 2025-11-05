@@ -6,7 +6,7 @@ import org.gradle.api.internal.TaskInternal
 import org.gradle.api.internal.project.ProjectInternal
 import org.gradle.api.tasks.TaskOutputs
 import org.gradle.internal.operations.BuildOperationDescriptor
-import org.gradle.internal.operations.BuildOperationExecutor
+import org.gradle.internal.operations.BuildOperationRunner
 import org.gradle.workers.WorkerExecutor
 
 
@@ -43,7 +43,7 @@ fun Task.execute(
 
     val services = (project as ProjectInternal).services
 
-    val buildOperationExecutor = services[BuildOperationExecutor::class.java]
+    val buildOperationExecutor = services[BuildOperationRunner::class.java]
     val workerExecutor = services[WorkerExecutor::class.java]
 
     val buildOperation = buildOperationExecutor.start(BuildOperationDescriptor.displayName(name))

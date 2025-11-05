@@ -23,7 +23,7 @@ fun String.splitIntoWords(): Sequence<String> = sequence {
         if (KotlinVersion.CURRENT.isAtLeast(1, 5)) {
             { lowercaseChar() }
         } else {
-            { @Suppress("DEPRECATION") toLowerCase() }
+            { @Suppress("DEPRECATION_ERROR") toLowerCase() }
         }
 
     this@splitIntoWords.forEach { ch ->
